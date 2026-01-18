@@ -1,0 +1,65 @@
+#include <iostream>
+using namespace std;
+
+struct Nodo {
+    int dato;
+    Nodo* siguiente;
+};
+
+class Lista {
+private:
+    Nodo* cabeza;
+
+public:
+    Lista() {
+        cabeza = NULL;
+    }
+
+    void insertar(int valor) {
+        Nodo* nuevo = new Nodo();
+        nuevo->dato = valor;
+        nuevo->siguiente = cabeza;
+        cabeza = nuevo;
+    }
+
+    void mostrar() {
+        Nodo* aux = cabeza;
+        while (aux != NULL) {
+            cout << aux->dato << " -> ";
+            aux = aux->siguiente;
+        }
+        cout << "NULL" << endl;
+    }
+
+    // Invertir la lista
+    void invertir() {
+        Nodo* anterior = NULL;
+        Nodo* actual = cabeza;
+        Nodo* siguiente = NULL;
+
+        while (actual != NULL) {
+            siguiente = actual->siguiente;
+            actual->siguiente = anterior;
+            anterior = actual;
+            actual = siguiente;
+        }
+        cabeza = anterior;
+    }
+};
+
+int main() {
+    Lista lista;
+    lista.insertar(1);
+    lista.insertar(2);
+    lista.insertar(3);
+
+    cout << "Lista original:" << endl;
+    lista.mostrar();
+
+    lista.invertir();
+
+    cout << "Lista invertida:" << endl;
+    lista.mostrar();
+
+    return 0;
+}
