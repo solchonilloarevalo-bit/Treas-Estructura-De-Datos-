@@ -1,0 +1,58 @@
+#include <iostream>
+using namespace std;
+
+// Estructura del nodo
+struct Nodo {
+    int dato;
+    Nodo* siguiente;
+};
+
+// Clase Lista Enlazada
+class Lista {
+private:
+    Nodo* cabeza;
+
+public:
+    Lista() {
+        cabeza = NULL;
+    }
+
+    // Insertar al final
+    void insertar(int valor) {
+        Nodo* nuevo = new Nodo();
+        nuevo->dato = valor;
+        nuevo->siguiente = NULL;
+
+        if (cabeza == NULL) {
+            cabeza = nuevo;
+        } else {
+            Nodo* aux = cabeza;
+            while (aux->siguiente != NULL) {
+                aux = aux->siguiente;
+            }
+            aux->siguiente = nuevo;
+        }
+    }
+
+    // Contar elementos
+    int contarElementos() {
+        int contador = 0;
+        Nodo* aux = cabeza;
+
+        while (aux != NULL) {
+            contador++;
+            aux = aux->siguiente;
+        }
+        return contador;
+    }
+};
+
+int main() {
+    Lista lista;
+    lista.insertar(10);
+    lista.insertar(20);
+    lista.insertar(30);
+
+    cout << "Cantidad de elementos: " << lista.contarElementos() << endl;
+    return 0;
+}
