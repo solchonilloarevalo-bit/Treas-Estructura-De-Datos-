@@ -1,0 +1,49 @@
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Ingrese el número de discos:");
+        int n = int.Parse(Console.ReadLine());
+
+        // Creamos tres pilas para las torres A, B y C
+        Stack<int> torreA = new Stack<int>();
+        Stack<int> torreB = new Stack<int>();
+        Stack<int> torreC = new Stack<int>();
+
+        // Inicializamos la torre A con los discos (más grande abajo)
+        for (int i = n; i >= 1; i--)
+        {
+            torreA.Push(i);
+        }
+
+        Console.WriteLine("\nMovimientos de las Torres de Hanoi:");
+        MoverDiscos(n, torreA, torreC, torreB, "A", "C", "B");
+    }
+
+    // Función recursiva para mover discos
+    static void MoverDiscos(int n, Stack<int> origen, Stack<int> destino, Stack<int> auxiliar,
+                            string origenNombre, string destinoNombre, string auxiliarNombre)
+    {
+        if (n == 1)
+        {
+            int disco = origen.Pop(); // Sacamos el disco del tope
+            destino.Push(disco);      // Lo ponemos en la torre destino
+            Console.WriteLine($"Mover disco {disco} de {origenNombre} a {destinoNombre}");
+            return;
+        }
+
+        // Mover n-1 discos de origen a auxiliar
+        MoverDiscos(n - 1, origen, auxiliar, destino, origenNombre, auxiliarNombre, destinoNombre);
+
+        // Mover el disco restante a destino
+        int discoGrande = origen.Pop();
+        destino.Push(discoGrande);
+        Console.WriteLine($"Mover disco {discoGrande} de {origenNombre} a {destinoNombre}");
+
+        // Mover n-1 discos de auxiliar a destino
+        MoverDiscos(n - 1, auxiliar, destino, origen, auxiliarNombre, destinoNombre, origenNombre);
+    }
+}

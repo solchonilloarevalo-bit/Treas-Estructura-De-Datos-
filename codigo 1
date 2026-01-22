@@ -1,0 +1,53 @@
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Ingrese la expresión matemática:");
+        string expresion = Console.ReadLine();
+
+        if (ParentesisBalanceados(expresion))
+        {
+            Console.WriteLine("Fórmula balanceada.");
+        }
+        else
+        {
+            Console.WriteLine("Fórmula NO balanceada.");
+        }
+    }
+
+    // Función para verificar paréntesis balanceados
+    static bool ParentesisBalanceados(string expr)
+    {
+        Stack<char> pila = new Stack<char>();
+
+        foreach (char c in expr)
+        {
+            // Si es un paréntesis de apertura, lo agregamos a la pila
+            if (c == '(' || c == '{' || c == '[')
+            {
+                pila.Push(c);
+            }
+            // Si es un paréntesis de cierre, comprobamos con el tope de la pila
+            else if (c == ')' || c == '}' || c == ']')
+            {
+                if (pila.Count == 0) return false; // No hay apertura para este cierre
+
+                char abierto = pila.Pop(); // Sacamos el último abierto
+
+                // Verificamos que coincidan apertura y cierre
+                if ((c == ')' && abierto != '(') ||
+                    (c == '}' && abierto != '{') ||
+                    (c == ']' && abierto != '['))
+                {
+                    return false; // No coinciden
+                }
+            }
+        }
+
+        // Si la pila quedó vacía, todo está balanceado
+        return pila.Count == 0;
+    }
+}
